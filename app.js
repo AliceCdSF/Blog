@@ -143,7 +143,7 @@ app.get('/delete2/:id', (req, res) => {
   
   db.query(sql, [id], (err, result) => {
     if (err) throw err;
-    res.redirect('/postagem');
+    res.redirect('/teste');
   });
 });
 
