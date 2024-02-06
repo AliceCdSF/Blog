@@ -25,6 +25,39 @@
           </div>
         </div>
       </nav>
+      <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+      <script>
+          $(document).ready(function() {
+              $(".delete-post").on("click", function(e) {
+                  e.preventDefault();
+      
+                  var postId = $(this).data("id");
+                  var postElement = $(this).closest('li');  // Elemento do post a ser removido
+      
+                  // Confirmação antes de excluir o post
+                  var confirmation = confirm("Tem certeza de que deseja excluir este post?");
+                  
+                  if (confirmation) {
+                      // Envia a solicitação AJAX para excluir o post
+                      $.ajax({
+                          type: "GET",
+                          url: "/delete2/" + postId,
+                          success: function(response) {
+                              // Remove dinamicamente o post da lista se a exclusão for bem-sucedida
+                              postElement.remove();
+                              alert("Post excluído com sucesso!");
+                          },
+                          error: function(error) {
+                              alert("Erro ao excluir o post.");
+                              console.error(error);
+                          }
+                      });
+                  }
+              });
+          });
+      </script>
+
+
       <script>
         function home() {
          
@@ -123,10 +156,12 @@
       <li>
         <strong><%= a.mensagens %> </strong> 
          
-        <a href="/deletePostagens/<%= a.mensagens %>">Delete</a>
+        <a href="/delete2/<%= a.id %>">Delete</a>
       </li>
    <% }); %>
   </ul> 
+
+
 
 
 </body>
